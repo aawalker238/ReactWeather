@@ -14,7 +14,7 @@ import React from "react"; // SAME AS var React = require("react");
 var WeatherMessage = ({temp, location}) => {
     return (
             <div>
-                <p>The temperature in {location} is {temp} degrees (F)</p>
+                <p className="text-center">The temperature in {location} is {temp} degrees (F)</p>
             </div>
         );
 }

@@ -3,6 +3,8 @@ import React from "react"; // SAME AS var React = require("react");
 import WeatherForm from "WeatherForm";
 import WeatherMessage from "WeatherMessage";
 import openWeatherMap from "openWeatherMap";
+import ErrorModal from "ErrorModal";
+
 
 var Weather = React.createClass({
     getInitialState: function(){
@@ -14,7 +16,10 @@ var Weather = React.createClass({
         var _this = this;
         
 
-        this.setState({isLoading:true});
+        this.setState({
+            isLoading:true,
+            errorMessage: undefined
+        });
 
         // location = location[0].toUpperCase()+location.substring(1).toLowerCase();
         var locationArray = location.split(" ");
@@ -32,17 +37,15 @@ var Weather = React.createClass({
                     temp,
                     isLoading:false
                 });
-            }, function(errorMessage){
+            }, function(e){
                 _this.setState({
-                    isLoading:false
+                    isLoading:false,
+                    errorMessage: e.message
                 });
-                alert(errorMessage);
-                
             });
-       
     },
     render: function(){
-        var {isLoading, temp, location} = this.state;
+        var {isLoading, temp, location, errorMessage} = this.state;
 
         function renderMessage(){
             if(isLoading){
@@ -57,11 +60,21 @@ var Weather = React.createClass({
                 );
             }
         }
+
+        function renderError () {
+            if(typeof errorMessage === 'string') {
+                return (
+                    <ErrorModal message={errorMessage}/>
+                );
+            }
+        }
+
         return (
             <div>
-                <h1>Weather component!</h1>
+                <h1 className="text-center">Weather</h1>
                 <WeatherForm onSearch={this.handleSearch} />
                 {renderMessage()}
+                {renderError()}
             </div>
         );
     }
