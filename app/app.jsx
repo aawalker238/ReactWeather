@@ -11,7 +11,7 @@ require("style!css!foundation-sites/dist/foundation.min.css");
 $(document).foundation();
 
 
-require("style!css!customStyles");
+require("style!css!sass!customStyles");
 
 
 
